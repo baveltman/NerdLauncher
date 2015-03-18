@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -75,14 +76,17 @@ public class NerdLauncherFragment extends ListFragment {
             // If we weren't given a view, inflate one
             if(convertView == null) {
                 convertView = getActivity().getLayoutInflater()
-                        .inflate(android.R.layout.simple_list_item_1, null);
+                        .inflate(R.layout.list_item, null);
             }
 
-            // Documentation says that simple_list_item_1 is a TextView,
-            // so cast it so that you can set its text value
-            TextView tv = (TextView)convertView;
             ResolveInfo ri = getItem(position);
-            tv.setText(ri.loadLabel(mPackageManager));
+            TextView titleTextView =
+                    (TextView)convertView.findViewById(R.id.activity_title);
+            titleTextView.setText(ri.loadLabel(mPackageManager));
+
+            ImageView appIcon = (ImageView)convertView.findViewById(R.id.activity_icon);
+            appIcon.setImageDrawable(ri.loadIcon(mPackageManager));
+
             return convertView;
         }
     }
